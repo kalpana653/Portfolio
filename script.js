@@ -119,6 +119,9 @@ window.addEventListener('load', () => {
     }
 });
 
+// Dynamic footer year
+document.getElementById('currentYear').textContent = new Date().getFullYear();
+
 // Intersection Observer for animations
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
