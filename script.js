@@ -3,7 +3,6 @@ const sidebar = document.getElementById('sidebar');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
 const sidebarClose = document.getElementById('sidebarClose');
 const settingsBtn = document.getElementById('settingsBtn');
-const themeToggle = document.getElementById('themeToggle');
 const hamburger = document.getElementById('hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -21,19 +20,10 @@ function closeSidebar() {
 sidebarClose.addEventListener('click', closeSidebar);
 sidebarOverlay.addEventListener('click', closeSidebar);
 
-// Theme Toggle (header icon)
-themeToggle.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-});
-
+// Theme Toggle (from sidebar only)
 function setTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
-    // Update toggle icon
-    const icon = themeToggle.querySelector('.material-symbols-rounded');
-    icon.textContent = theme === 'dark' ? 'light_mode' : 'dark_mode';
     // Update sidebar buttons
     document.querySelectorAll('.theme-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.theme === theme);
