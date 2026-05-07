@@ -75,15 +75,22 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Active Nav on Scroll
+// Active Nav on Scroll + Navbar shadow
 function updateActiveNav() {
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-menu a');
-    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+    const navbar = document.querySelector('.navbar');
+
+    // Add scrolled class for shadow
+    if (window.scrollY > 10) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
 
     let current = '';
     sections.forEach(section => {
-        if (window.scrollY >= section.offsetTop - navbarHeight - 10) {
+        if (window.scrollY >= section.offsetTop - 80) {
             current = section.getAttribute('id');
         }
     });
@@ -125,13 +132,29 @@ document.querySelectorAll('.skill-item, .project-card, .timeline-card, .stat-car
     observer.observe(el);
 });
 
-// Contact form success message
+// Contact form
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', () => {
         // FormSubmit.co handles the actual submission
-        // Show a brief visual feedback
         const btn = contactForm.querySelector('button[type="submit"]');
         btn.textContent = 'Sending...';
+        // Show toast after short delay
+        setTimeout(() => {
+            showToast('Message sent successfully! I\'ll get back to you soon.');
+        }, 1000);
     });
+}
+
+// Toast notification
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast-message';
+    toast.innerHTML = `<span class="material-symbols-rounded">check_circle</span>${message}`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
 }
